@@ -4,6 +4,7 @@ const instructionText = document.getElementById('instruction-text');
 const logo = document.getElementById('logo');
 const score = document.getElementById('score');
 const highScoreText = document.getElementById('highScore');
+const startButton = document.getElementById('start-button');
 
 // Define game variables
 const gridSize = 20;
@@ -45,9 +46,6 @@ function setPosition(element, position) {
   element.style.gridRow = position.y;
 }
 
-// Testing draw function
-// draw();
-
 // Draw food function
 function drawFood() {
   if (gameStarted) {
@@ -84,8 +82,6 @@ function move() {
 
   snake.unshift(head);
 
-  //   snake.pop();
-
   if (head.x === food.x && head.y === food.y) {
     food = generateFood();
     increaseSpeed();
@@ -100,23 +96,21 @@ function move() {
   }
 }
 
-// Test moving
-// setInterval(() => {
-//   move(); // Move first
-//   draw(); // Then draw again new position
-// }, 200);
-
 // Start game function
 function startGame() {
-  gameStarted = true; // Keep track of a running game
+  gameStarted = true;
   instructionText.style.display = 'none';
   logo.style.display = 'none';
+  startButton.style.display = 'none'; // Hide start button
   gameInterval = setInterval(() => {
     move();
     checkCollision();
     draw();
   }, gameSpeedDelay);
 }
+
+// Event listener for start button
+startButton.addEventListener('click', startGame);
 
 // Keypress event listener
 function handleKeyPress(event) {
@@ -146,7 +140,6 @@ function handleKeyPress(event) {
 document.addEventListener('keydown', handleKeyPress);
 
 function increaseSpeed() {
-  //   console.log(gameSpeedDelay);
   if (gameSpeedDelay > 150) {
     gameSpeedDelay -= 5;
   } else if (gameSpeedDelay > 100) {
@@ -192,6 +185,7 @@ function stopGame() {
   gameStarted = false;
   instructionText.style.display = 'block';
   logo.style.display = 'block';
+  startButton.style.display = 'block'; // Show start button
 }
 
 function updateHighScore() {
@@ -202,3 +196,6 @@ function updateHighScore() {
   }
   highScoreText.style.display = 'block';
 }
+
+
+
